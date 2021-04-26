@@ -1,5 +1,5 @@
 module.exports = {
-    msgWelcome: {
+    msgChat: {
         makeMessage: (isFirst, chatType) => {
             let chatTypeString;
             if (chatType == "reply")
