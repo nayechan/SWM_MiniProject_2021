@@ -1,5 +1,5 @@
 module.exports = {
-    msgWelcome: {
+    msgTerminated: {
         makeMessage: (conversation) => {
             return {
                 "conversationId": conversation.id,
