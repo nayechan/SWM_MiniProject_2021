@@ -9,6 +9,8 @@ const index = require('./routes/index');
 
 const app = express();
 
+const serverPort = 3000;
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -34,6 +36,6 @@ app.use(function(err, req, res, next) {
   res.json({ err });
 });
 
-app.listen(process.env.PORT || 80, () => console.log('Example app listening on port 80!'));
+app.listen(process.env.PORT || serverPort, () => console.log(`Example app listening on port $(serverPort)!`));
 
 module.exports = app;
