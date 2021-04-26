@@ -36,6 +36,6 @@ app.use(function(err, req, res, next) {
   res.json({ err });
 });
 
-app.listen(process.env.PORT || serverPort, () => console.log(`Example app listening on port $(serverPort)!`));
+app.listen(process.env.PORT || serverPort, () => console.log(`Example app listening on port ${serverPort}!`));
 
 module.exports = app;
