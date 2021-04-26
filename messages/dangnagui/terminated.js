@@ -3,7 +3,7 @@ module.exports = {
         makeMessage: (conversation) => {
             return {
                 "conversationId": conversation.id,
-                "text": "임금님 귀는 당나귀 귀!",
+                "text": "대화가 종료되었습니다...",
                 "blocks": [
                     {
                         "type": "header",
