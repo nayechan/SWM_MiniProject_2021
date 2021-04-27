@@ -1,13 +1,21 @@
 // routes/index.js
 const express = require('express');
 const router = express.Router();
+const db = require('../database');
+
 
 const libKakaoWork = require('../libs/kakaoWork');
 const { invite_survey, cafe_survey, cafe_survey_results } = require('../messages/cafe');
 
 router.get('/', async (req, res, next) => {
+	await db.user.create({
+        nickname: "userNickname",
+      });
+	
+	
   // 유저 목록 검색 (1)
   const users = await libKakaoWork.getUserList();
+	console.log(users);
 
   // 검색된 모든 유저에게 각각 채팅방 생성 (2)
   const conversations = await Promise.all(
