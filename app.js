@@ -8,6 +8,9 @@ const bodyParser = require('body-parser');
 const index = require('./routes/index');
 
 const app = express();
+const db = require('./database');
+
+	
 
 const serverPort = 3000;
 
