@@ -10,7 +10,7 @@ module.exports = function (sequlize, DataTypes) {
       },
       nickname: {
         type: DataTypes.STRING(20),
-        unique: true,
+        // unique: true,
         allowNull: false,
       },
     },

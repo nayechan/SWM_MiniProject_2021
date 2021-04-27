@@ -11,14 +11,11 @@ const sequelize = new Sequelize(
 	Config.DBInfo
 );
 
-// console.log(post);
-// post(sequelize, DataTypes);
-
-const db = {};
+// 모델 초기화
+const modelInstances = {};
 sequelize.authenticate().then(() => {
 	console.log('authenticated DB');
 });
-
 fs.readdirSync(path.join(__dirname, 'models'))
 	.filter(function (file) {
 		return (
@@ -27,15 +24,16 @@ fs.readdirSync(path.join(__dirname, 'models'))
 	})
 	.forEach(function (file) {
 		const model = require(path.join(__dirname, 'models', file))(sequelize, DataTypes);
-		db[model.name] = model;
+		modelInstances[model.name] = model;
 	});
-
-Object.keys(db).forEach(function (modelName) {
-	if ('associate' in db[modelName]) {
-		db[modelName].associate(db);
+// 모델 관계 초기화
+Object.keys(modelInstances).forEach(function (modelName) {
+	if ('associate' in modelInstances[modelName]) {
+		modelInstances[modelName].associate(modelInstances);
 	}
 });
 
+// 데이터 베이스 동기화
 sequelize.sync({ 
 	force: true,
 	logging: console.log
