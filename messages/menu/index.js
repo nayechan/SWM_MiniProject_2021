@@ -7,22 +7,20 @@ module.exports = {
 				blocks: [
 					{
 						type: 'header',
-						text: '임금님 귀는 당나귀 귀 !',
+						text: '임귀당귀 메뉴판',
 						style: 'blue',
 					},
 					{
 						type: 'text',
-						text:
-							`${nickname}님 안녕하세요`,
+						text: `${nickname}님 안녕하세요`,
 						markdown: true,
 					},
 					{
-					  "type": "divider"
+						type: 'divider',
 					},
 					{
 						type: 'text',
-						text:
-							'익명으로 글을 등록할 수 있어요!',
+						text: '닉네임으로 글을 등록할 수 있어요!',
 						markdown: true,
 					},
 					{
@@ -33,7 +31,7 @@ module.exports = {
 						style: 'default',
 					},
 					{
-					  "type": "divider"
+						type: 'divider',
 					},
 					{
 						type: 'text',

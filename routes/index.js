@@ -11,6 +11,8 @@ const {
 	initUserFailMessage,
 } = require('../messages/user');
 const { menuMessage } = require('../messages/menu');
+const { postFormModal, registerPostSuccessMessage, registerPostFailMessage, randomPostMessage, randomPostFailMessage } = require('../messages/post');
+
 const { user, post } = db.models;
 
 router.get('/', async (req, res, next) => {
@@ -62,8 +64,8 @@ router.post('/request', async (req, res, next) => {
 			return res.json({});
 		}
 	}
-	
-	if(userInstance == null) {
+
+	if (userInstance == null) {
 		// 유저 정보를 찾지 못했을 때 초대 메시지를 보냄.
 		libKakaoWork.sendMessage(inviteUserMessage.make(conversationId));
 		return res.json({});
@@ -73,48 +75,92 @@ router.post('/request', async (req, res, next) => {
 		case 'get_menu': // 메뉴 얻기
 			await libKakaoWork.sendMessage(menuMessage.make(conversationId, userInstance.nickname));
 			return res.json({});
-		case 'get_post_form' : // 포스트 작성 폼 얻기
+		case 'get_post_form': // 포스트 작성 폼 얻기
+			return res.json(postFormModal.make(userInstance.nickname));
+		case 'get_random_post': // 다른 사람 글 얻기.
+			const randomPosts = await post.findAll({
+				include: [
+					{
+					  model: user,
+					  attributes: ['nickname']
+					}
+				],
+				limit: 10,
+				order: [['id', 'DESC']]
+			});
+			
+			if(randomPosts == null || randomPosts.length == 0) {
+				await libKakaoWork.sendMessage(randomPostFailMessage.make(conversationId));	
+			} else {
+				const randomNum = Math.floor(Math.random() * randomPosts.length);
+				await libKakaoWork.sendMessage(randomPostMessage.make(conversationId, randomPosts[randomNum]));				
+			}
 			return res.json({});
-		case 'get_random_post' : // 다른 사람 글 얻기.
-			return res.json({});	
 		default:
 	}
 	res.json({});
 });
 
 router.post('/callback', async (req, res, next) => {
-	const { message, actions, action_time, value } = req.body; // 설문조사 결과 확인 (2)
 	console.log(req.body);
+	const { message, actions, action_time, value } = req.body; // 설문조사 결과 확인 (2)
+	const kakaoUserId = message.user_id;
+	const conversationId = message.conversation_id;
+	const userInstance = await user.findOne({
+		where: {
+			id: kakaoUserId,
+		},
+	});
+
+	// 가입 시,
+	if (value === 'init_user_result') {
+		const nickname = actions.nickname;
+
+		try {
+			await user.create({
+				id: kakaoUserId,
+				nickname: nickname,
+			});
+			await libKakaoWork.sendMessage(initUserSuccessMessage.make(conversationId, nickname));
+			return res.json({ result: true });
+		} catch (e) {
+			console.log('유저 생성에 실패하였습니다.');
+			console.log(e);
+			await libKakaoWork.sendMessage(
+				initUserFailMessage.make(conversationId, '알 수 없는 이유입니다.')
+			);
+			return res.json({ result: false });
+		}
+	}
+
+	if (userInstance == null) {
+		// 유저 정보를 찾지 못했을 때 초대 메시지를 보냄.
+		libKakaoWork.sendMessage(inviteUserMessage.make(conversationId));
+		return res.json({});
+	}
 
 	switch (value) {
-		case 'init_user_result':
-			const userId = message.user_id;
-			const nickname = actions.nickname;
-			const conversationId = message.conversation_id;
+		case 'register_post_result':
+			const title = actions.title;
+			const content = actions.content;
 
-			if (!userId | !nickname) {
-				await libKakaoWork.sendMessage(
-					initUserFailMessage.make(conversationId, '유저 아이디나 닉네임이 없습니다.')
-				);
-				return res.json({ result: false });
-			}
 			try {
-				await user.create({
-					id: userId,
-					nickname: nickname,
+				const postInstance = await post.create({
+					title: title,
+					content: content,
 				});
-				await libKakaoWork.sendMessage(
-					initUserSuccessMessage.make(conversationId, nickname)
-				);
+				await postInstance.setUser(userInstance);
+				await libKakaoWork.sendMessage(registerPostSuccessMessage.make(conversationId, userInstance.nickname));
 				return res.json({ result: true });
 			} catch (e) {
-				console.log('유저 생성에 실패하였습니다.');
+				console.log('글 등록에 실패하였습니다.');
 				console.log(e);
 				await libKakaoWork.sendMessage(
 					initUserFailMessage.make(conversationId, '알 수 없는 이유입니다.')
 				);
 				return res.json({ result: false });
 			}
+
 			break;
 		default:
 	}
