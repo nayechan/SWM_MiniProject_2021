@@ -97,7 +97,7 @@ module.exports = {
 				blocks: [
 					{
 						type: 'header',
-						text: post.content,
+						text: post.title,
 						style: 'blue',
 					},
 					{
@@ -112,6 +112,13 @@ module.exports = {
 						type: 'text',
 						text: post.content,
 						markdown: true,
+					},
+					{
+						type: 'button',
+						action_type: 'call_modal',
+						value: `reply_${post.id}`,
+						text: '답글 보내기',
+						style: 'default',
 					},
 					{
 						type: 'button',
