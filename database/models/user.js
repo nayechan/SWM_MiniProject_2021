@@ -3,14 +3,12 @@ module.exports = function (sequlize, DataTypes) {
     'user',
     {
       id: {
-        type: DataTypes.INTEGER(11),
-        autoIncrement: true,
+        type: DataTypes.STRING(20),
         primaryKey: true,
         allowNull: false,
       },
       nickname: {
         type: DataTypes.STRING(20),
-        // unique: true,
         allowNull: false,
       },
     },
