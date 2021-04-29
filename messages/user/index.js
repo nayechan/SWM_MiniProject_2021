@@ -11,19 +11,21 @@ module.exports = {
 						style: 'blue',
 					},
 					{
+					  type: "image_link",
+					  url: "https://cdn.pixabay.com/photo/2016/03/31/20/22/burro-1295711_960_720.png"
+					},
+					{
+					  type: "divider"
+					},
+					{
 					  type: "text",
 					  text: "어디 말할 곳은 없고, 이대로 두기에는 가슴 답답한 일이 있으신가요?",
 					 markdown: true
 					},
 					{
-					  type: "divider"
-					},
-					{
-					  type: "image_link",
-					  url: "https://cdn.pixabay.com/photo/2017/11/23/16/13/ear-2973126_1280.png"
-					},
-					{
-					  type: "divider"
+					  "type": "text",
+					  "text": "*임금님 귀는 당나귀 귀* 서비스를 사용해보세요!",
+					  "markdown": true
 					},
 					{
 						type: 'button',
