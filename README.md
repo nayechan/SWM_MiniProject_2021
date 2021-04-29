@@ -1,9 +1,10 @@
 # SW Maestro 12기 Mini Project
 ## Team. 임금님 귀는 당나귀 귀
 
-![임금님 귀는 당나귀 귀](https://github.com/nayechan/SWM_MiniProject_2021/blob/master/source/donkey.jpg?raw=true)
+<p align="center"><img alt="임귀당귀" src="https://github.com/nayechan/SWM_MiniProject_2021/blob/master/source/donkey.jpg?raw=true"></p>
 
-카카오워크 챗봇 "임금님 귀는 당나귀 귀"은 마음 속에 담아둔 미처 끄내지 못한 이야기, 어디서라도 한번 크게 소리질러 보고 싶은 이야기를 할 수 있게 합니다. "임금님 귀는 당나귀 귀"에서 소리 한 번 지르고 마음의 병을 던지세요!
+
+카카오워크 챗봇 "임금님 귀는 당나귀 귀(임귀당귀)"은 마음 속에 담아둔 미처 끄내지 못한 이야기, 어디서라도 한번 크게 소리질러 보고 싶은 이야기를 할 수 있게 합니다. "임금님 귀는 당나귀 귀"에서 소리 한 번 지르고 마음의 병을 던지세요!
 
 - [개요](#개요)
 - [사용법](#사용법)
@@ -22,6 +23,17 @@
 
 ## 사용법
 
+<p align="center"><img alt="시작하기" src="https://github.com/nayechan/SWM_MiniProject_2021/blob/master/source/sub_dk1.png?raw=true"></p>
+
+챗봇을 다운로드 받으면, 사용자 등록을 할 수 있습니다. 임귀당귀에서는 모두 익명으로 활동하니, 자신의 속마음을 풀어낼 수 있는 닉네임을 지어주세요.
+
+<p align="center"><img alt="환영인사" src="https://github.com/nayechan/SWM_MiniProject_2021/blob/master/source/dk2.jpeg?raw=true"></p>
+
+올바른 형식으로 닉네임을 지으면, 곧바로 챗봇이 환영인사를 해줄 겁니다!
+
+<p align="center"><img alt="대나무숲" src="https://github.com/nayechan/SWM_MiniProject_2021/blob/master/source/dk3.jpeg?raw=true"></p>
+
+임귀당귀의 대나무숲에 맘편히 소리를 질러보세요! 글 작성하기 버튼을 누르면 언제든지 소리를 지를 수 있습니다. 대나무숲에 실린 다른 사람의 소리를 들을 수도 있습니다.
 
 ## 필요사항
 - Node.js 12.22.1
@@ -39,6 +51,8 @@
 - [x] mysql, sequelize
 - [x] 1회성 답장 기능
 - [x] 자동 수신 기능
+- [x] no SQL injection
+
 
 ## 팀원
 - 나예찬
