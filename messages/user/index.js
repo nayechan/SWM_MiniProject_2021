@@ -47,6 +47,11 @@ module.exports = {
 							markdown: true,
 						},
 						{
+							type: 'label',
+							text: '(다른 사람에게 보여지는 닉네임입니다.)',
+							markdown: true,
+						},
+						{
 							type: 'input',
 							name: 'nickname',
 							required: true,
@@ -73,13 +78,6 @@ module.exports = {
 						text:
 							`${nickname} 님 환영합니다.`,
 						markdown: true,
-					},
-					{
-						type: 'button',
-						action_type: 'call_modal',
-						value: 'get_menu',
-						text: '메뉴 보기',
-						style: 'default',
 					},
 				],
 			};
