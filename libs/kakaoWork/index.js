@@ -11,8 +11,22 @@ const kakaoInstance = axios.create({
 
 // 유저 목록 검색 (1)
 exports.getUserList = async () => {
-  const res = await kakaoInstance.get('/v1/users.list');
-  return res.data.users;
+  const users = [];
+  const res = await kakaoInstance.get('/v1/users.list', {
+	  limmit: 100,
+  });
+  Array.prototype.push.apply(users, res.data.users);	
+
+  while(res.data.cursor != null){
+	  const res = await kakaoInstance.get('/v1/users.list', {
+		  limmit: 100,
+		  cursor: res.data.cursor,
+	  });
+	  Array.prototype.push.apply(users, res.data.users);
+  }
+
+  console.log(users);
+  return users;
 };
 
 // 채팅방 생성 (2)
