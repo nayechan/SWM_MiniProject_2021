@@ -40,8 +40,9 @@ module.exports = {
                     },
                     {
                         type: 'button',
-                        action_type: 'call_modal',
+												action_type: 'submit_action',
                         value: 'get_random_post',
+                       	action_name: 'get_random_post',
                         text: '다른 사람의 글 읽기',
                         style: 'default',
                     },

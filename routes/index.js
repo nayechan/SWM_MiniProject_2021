@@ -109,33 +109,9 @@ router.post('/request', async (req, res, next) => {
 	
 	// 다른 모든 요청 처리.
     switch (value) {
-        case 'get_menu': // 메뉴 얻기
-            await libKakaoWork.sendMessage(menuMessage.make(conversationId, userInstance.nickname));
-            return res.json(noticeModal.make('메뉴 화면입니다.'));
         case 'get_post_form': // 포스트 작성 폼 얻기
             return res.json(postFormModal.make(userInstance.nickname));
-        case 'get_random_post': // 다른 사람 글 얻기.
-            const randomPosts = await post.findAll({
-                include: [
-                    {
-                        model: user,
-                        attributes: ['nickname'],
-                    },
-                ],
-                limit: 10,
-                order: [['id', 'DESC']],
-            });
-
-            if (randomPosts == null || randomPosts.length == 0) {
-                await libKakaoWork.sendMessage(randomPostFailMessage.make(conversationId));
-                return res.json(noticeModal.make('대나무 숲이 조용합니다!'));
-            } else {
-                const randomNum = Math.floor(Math.random() * randomPosts.length);
-                await libKakaoWork.sendMessage(
-                    randomPostMessage.make(conversationId, randomPosts[randomNum])
-                );
-                return res.json(noticeModal.make('글이 도착했습니다.'));
-            }
+						break;
         default:
     }
     return res.json(noticeModal.make('알 수 없는 요청입니다.'));
@@ -242,6 +218,35 @@ router.post('/callback', async (req, res, next) => {
             }
 
             break;
+				
+        case 'get_menu': // 메뉴 얻기
+            await libKakaoWork.sendMessage(menuMessage.make(conversationId, userInstance.nickname));
+            return res.json({});
+						break;
+				
+        case 'get_random_post': // 다른 사람 글 얻기.
+            const randomPosts = await post.findAll({
+                include: [
+                    {
+                        model: user,
+                        attributes: ['nickname'],
+                    },
+                ],
+                limit: 10,
+                order: [['id', 'DESC']],
+            });
+
+            if (randomPosts == null || randomPosts.length == 0) {
+                await libKakaoWork.sendMessage(randomPostFailMessage.make(conversationId));
+            		return res.json({});
+            } else {
+                const randomNum = Math.floor(Math.random() * randomPosts.length);
+                await libKakaoWork.sendMessage(
+                    randomPostMessage.make(conversationId, randomPosts[randomNum])
+                );
+            		return res.json({});
+            }
+					break;
         default:
     }
 
