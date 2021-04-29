@@ -1,7 +1,7 @@
 # SW Maestro 12 Mini Project
 ## Team. 임금님 귀는 당나귀 귀
 
-![임금님 귀는 당나귀 귀](https://github.com/nayechan/SWM_MiniProject_2021/tree/master/source/donkey.jpg)
+![임금님 귀는 당나귀 귀](https://github.com/nayechan/SWM_MiniProject_2021/blob/master/source/donkey.jpg?raw=true)
 
 카카오워크 챗봇 "임금님 귀는 당나귀 귀"은 마음 속에 담아둔 미처 끄내지 못한 이야기, 어디서라도 한번 크게 소리질러 보고 싶은 이야기를 할 수 있게 합니다. "임금님 귀는 당나귀 귀"에서 소리 한 번 지르고 마음의 병을 던지세요!
 
