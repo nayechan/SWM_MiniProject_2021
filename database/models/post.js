@@ -27,7 +27,9 @@ module.exports = function (sequlize, DataTypes) {
   
   // console.log(post);
   post.associate = (models) => {
-    post.belongsTo(models.user)
+    post.belongsTo(models.user,{
+            foreignKey: 'pk_userID',
+		})
   }
   return post
 }
