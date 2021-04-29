@@ -7,8 +7,12 @@ module.exports = {
 				blocks: [
 					{
 						type: 'header',
-						text: '임금님 귀는 당나귀 귀 !',
+						text: '임금님 귀는 당나귀 귀',
 						style: 'blue',
+					},
+					{
+      					type: "image_link",
+      					url: "https://cdn.pixabay.com/photo/2017/11/23/16/13/ear-2973126_1280.png"
 					},
 					{
 						type: 'text',
@@ -18,7 +22,7 @@ module.exports = {
 					},
 					{
 						type: 'text',
-						text: '임금님 귀는 당나귀 귀 서비스를 이용해 보세요!',
+						text: '*"임금님 귀는 당나귀 귀"* 서비스를 사용해보세요!',
 						markdown: true,
 					},
 					{
