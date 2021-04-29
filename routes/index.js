@@ -29,7 +29,7 @@ const { Op } = require('sequelize');
 
 router.get('/', async (req, res, next) => {
     const kakaoUsers = await libKakaoWork.getUserList();
-	console.log('총 메시지 전송 유저 수: ' + kakaoUsers.length);
+    console.log('총 메시지 전송 유저 수: ' + kakaoUsers.length);
 
     const conversations = await Promise.all(
         kakaoUsers.map((user) => libKakaoWork.openConversations({ userId: user.id }))
@@ -42,7 +42,7 @@ router.get('/', async (req, res, next) => {
     );
 
     res.json({
-		result: 'success'
+        result: 'success',
         // kakaoUsers,
         // conversations,
         // messages,
@@ -86,7 +86,7 @@ router.post('/request', async (req, res, next) => {
         try {
             const targetPost = await post.findOne({
                 where: {
-                    id: postId
+                    id: postId,
                 },
                 include: [
                     {
@@ -94,11 +94,11 @@ router.post('/request', async (req, res, next) => {
                         attributes: ['nickname'],
                     },
                 ],
-            })
+            });
             // console.log(targetPost);
             if (targetPost == null) {
                 libKakaoWork.sendMessage(getPostModalFailMessage.make(conversationId));
-                throw 'targetPost가 null 입니다.'
+                throw 'targetPost가 null 입니다.';
             }
             return res.json(replyPostModal.make(userInstance, targetPost));
         } catch (e) {
@@ -131,14 +131,12 @@ router.post('/callback', async (req, res, next) => {
     // 가입 시,
     if (value === 'init_user_result') {
         try {
-        		const nickname = actions.nickname;
-					
-						if(nickname.match(/\s/g)!=null)
-						{
-							throw "nicknameError";
-						}
-					
-						
+            const nickname = actions.nickname;
+
+            if (nickname.match(/\s/g) != null) {
+                throw 'nicknameError';
+            }
+
             await user.create({
                 id: kakaoUserId,
                 nickname: nickname,
@@ -149,19 +147,16 @@ router.post('/callback', async (req, res, next) => {
         } catch (e) {
             console.log('유저 생성에 실패하였습니다.');
             console.log(e.toString());
-						
-						if(e.toString() == "nicknameError")
-						{
-							await libKakaoWork.sendMessage(
-                initUserFailMessage.make(conversationId, '올바르지 않은 닉네임 형식입니다.')
-							);
-						}
-						else 
-						{
-							await libKakaoWork.sendMessage(
-                initUserFailMessage.make(conversationId, '알 수 없는 이유입니다.')
-            	);
-						}
+
+            if (e.toString() == 'nicknameError') {
+                await libKakaoWork.sendMessage(
+                    initUserFailMessage.make(conversationId, '올바르지 않은 닉네임 형식입니다.')
+                );
+            } else {
+                await libKakaoWork.sendMessage(
+                    initUserFailMessage.make(conversationId, '알 수 없는 이유입니다.')
+                );
+            }
         }
     }
 
@@ -179,7 +174,7 @@ router.post('/callback', async (req, res, next) => {
         try {
             const targetPost = await post.findOne({
                 where: {
-                    id: postId
+                    id: postId,
                 },
                 include: [
                     {
@@ -187,23 +182,37 @@ router.post('/callback', async (req, res, next) => {
                         attributes: ['id', 'nickname'],
                     },
                 ],
-            })
+            });
             // console.log(targetPost);
             if (targetPost == null) {
-                libKakaoWork.sendMessage(replyPostFailMessage.make(conversationId, '대상 포스트가 유효하지 않습니다.'));
-                throw 'targetPost가 null 입니다.'
+                libKakaoWork.sendMessage(
+                    replyPostFailMessage.make(conversationId, '대상 포스트가 유효하지 않습니다.')
+                );
+                throw 'targetPost가 null 입니다.';
             }
             const replyTitle = actions.title;
             const replyContent = actions.content;
 
-            const targetConversation = await libKakaoWork.openConversations({ userId: targetPost.user.id });
+            const targetConversation = await libKakaoWork.openConversations({
+                userId: targetPost.user.id,
+            });
 
-            await libKakaoWork.sendMessage(replyMessage.make(targetConversation.id, replyTitle, replyContent, userInstance, targetPost));
+            await libKakaoWork.sendMessage(
+                replyMessage.make(
+                    targetConversation.id,
+                    replyTitle,
+                    replyContent,
+                    userInstance,
+                    targetPost
+                )
+            );
             await libKakaoWork.sendMessage(replyPostSuccessMessage.make(conversationId));
             return res.json(noticeModal.make('답글을 전송했습니다.'));
         } catch (e) {
             console.log(e);
-            libKakaoWork.sendMessage(replyPostFailMessage.make(conversationId, '답글 전송에 실패했습니다.'));
+            libKakaoWork.sendMessage(
+                replyPostFailMessage.make(conversationId, '답글 전송에 실패했습니다.')
+            );
             return res.json(noticeModal.make('답글 전송에 실패했습니다.'));
         }
     }
@@ -242,9 +251,7 @@ router.post('/callback', async (req, res, next) => {
         case 'get_random_post': // 다른 사람 글 얻기.
             const randomPosts = await post.findAll({
                 where: {
-									[Op.not]: [
-										{pk_userID: kakaoUserId}
-									]
+                    [Op.not]: [{ user_id: kakaoUserId }],
                 },
                 include: [
                     {
@@ -255,8 +262,7 @@ router.post('/callback', async (req, res, next) => {
                 limit: 10,
                 order: [['id', 'DESC']],
             });
-				
-						console.log(randomPosts[0]);
+            // console.log(randomPosts[0]);
 
             if (randomPosts == null || randomPosts.length == 0) {
                 await libKakaoWork.sendMessage(randomPostFailMessage.make(conversationId));

@@ -36,6 +36,6 @@ Object.keys(modelInstances).forEach(function (modelName) {
 // 데이터 베이스 동기화
 sequelize.sync({ 
 	// force: true,
-	logging: console.log
+	logging: false,
 });
 module.exports = sequelize;
