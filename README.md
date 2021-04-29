@@ -1,4 +1,4 @@
-# SW Maestro 12 Mini Project
+# SW Maestro 12기 Mini Project
 ## Team. 임금님 귀는 당나귀 귀
 
 ![임금님 귀는 당나귀 귀](https://github.com/nayechan/SWM_MiniProject_2021/blob/master/source/donkey.jpg?raw=true)
