@@ -21,7 +21,7 @@
 
 
 ## 사용법
-![시작하기](https://github.com/nayechan/SWM_MiniProject_2021/blob/master/source/dk1.jpeg?raw=true)
+![시작하기](https://github.com/nayechan/SWM_MiniProject_2021/blob/master/source/sub_dk1.png?raw=true)
 
 챗봇을 다운로드 받으면, 사용자 등록을 할 수 있습니다. 임귀당귀에서는 모두 익명으로 활동하니, 자신의 속마음을 풀어낼 수 있는 닉네임을 지어주세요.
 
