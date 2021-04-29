@@ -263,7 +263,7 @@ router.post('/callback', async (req, res, next) => {
                     limit: 10,
                     order: [['id', 'DESC']],
                 });
-				console.log(randomPosts[0]);
+				// console.log(randomPosts[0]);
                 if (randomPosts == null || randomPosts.length == 0) {
                     await libKakaoWork.sendMessage(randomPostFailMessage.make(conversationId));
                     return res.json({});
