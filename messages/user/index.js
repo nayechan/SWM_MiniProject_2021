@@ -8,24 +8,25 @@ module.exports = {
 					{
 						type: 'header',
 						text: '임금님 귀는 당나귀 귀',
-						style: 'blue',
+						style: 'yellow',
 					},
 					{
 					  type: "image_link",
-					  url: "https://cdn.pixabay.com/photo/2016/03/31/20/22/burro-1295711_960_720.png"
+					  url: "https://image.freepik.com/free-vector/cute-donkey-character-design_123847-655.jpg"
 					},
 					{
 					  type: "divider"
 					},
 					{
-					  type: "text",
-					  text: "어디 말할 곳은 없고, 이대로 두기에는 가슴 답답한 일이 있으신가요?",
-					 markdown: true
+						type: 'text',
+						text:
+							'어디 말할 곳은 없고, 이대로 두기에는 가슴 답답한 일이 있으신가요?',
+						markdown: true,
 					},
 					{
-					  "type": "text",
-					  "text": "*임금님 귀는 당나귀 귀* 서비스를 사용해보세요!",
-					  "markdown": true
+						type: 'text',
+						text: '*"임금님 귀는 당나귀 귀"* 서비스를 이용해 보세요!',
+						markdown: true,
 					},
 					{
 						type: 'button',
@@ -42,14 +43,14 @@ module.exports = {
 		make: () => {
 			return {
 				view: {
-					title: 'modal title',
+					title: '닉네임 설정',
 					accept: '가입',
 					decline: '취소',
 					value: 'init_user_result',
 					blocks: [
 						{
 							type: 'label',
-							text: '닉네임 설정',
+							text: '*닉네임*을 설정해주세요.',
 							markdown: true,
 						},
 						{
@@ -76,13 +77,13 @@ module.exports = {
 				blocks: [
 					{
 						type: 'header',
-						text: '가입되었습니다.',
+						text: '가입이 완료되었습니다.',
 						style: 'blue',
 					},
 					{
 						type: 'text',
 						text:
-							`${nickname} 님 환영합니다.`,
+							`${nickname} 님 환영합니다. 😀`,
 						markdown: true,
 					},
 				],

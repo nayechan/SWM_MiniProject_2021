@@ -7,20 +7,12 @@ module.exports = {
                 blocks: [
                     {
                         type: 'header',
-                        text: '임귀당귀 메뉴판',
-                        style: 'blue',
-                    },
+                        text: `${nickname}님의 임귀당귀`,
+                        style: 'yellow',
+                    },                    
                     {
                         type: 'text',
-                        text: `${nickname}님 안녕하세요`,
-                        markdown: true,
-                    },
-                    {
-                        type: 'divider',
-                    },
-                    {
-                        type: 'text',
-                        text: '닉네임으로 글을 등록할 수 있어요!',
+                        text: '마음의 소리를 외쳐보세요📣',
                         markdown: true,
                     },
                     {
@@ -35,7 +27,7 @@ module.exports = {
                     },
                     {
                         type: 'text',
-                        text: '다른 사람이 등록한 무작위 글을 얻어 올 수 있어요!',
+                        text: '다른 사람은 어떤 소리를 외쳤을까요❔',
                         markdown: true,
                     },
                     {
