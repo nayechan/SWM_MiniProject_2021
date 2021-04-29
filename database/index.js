@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { Sequelize, DataTypes } = require('sequelize');
+const { Op, Sequelize, DataTypes } = require('sequelize');
 const Config = require('config');
 const post = require('./models/post.js');
 
