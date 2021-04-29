@@ -249,31 +249,37 @@ router.post('/callback', async (req, res, next) => {
             break;
 
         case 'get_random_post': // 다른 사람 글 얻기.
-            const randomPosts = await post.findAll({
-                where: {
-                    [Op.not]: [{ user_id: kakaoUserId }],
-                },
-                include: [
-                    {
-                        model: user,
-                        attributes: ['nickname'],
+            try {
+                const randomPosts = await post.findAll({
+                    where: {
+                        [Op.not]: [{ user_id: kakaoUserId }],
                     },
-                ],
-                limit: 10,
-                order: [['id', 'DESC']],
-            });
-            // console.log(randomPosts[0]);
-
-            if (randomPosts == null || randomPosts.length == 0) {
+                    include: [
+                        {
+                            model: user,
+                            attributes: ['nickname'],
+                        },
+                    ],
+                    limit: 10,
+                    order: [['id', 'DESC']],
+                });
+				console.log(randomPosts[0]);
+                if (randomPosts == null || randomPosts.length == 0) {
+                    await libKakaoWork.sendMessage(randomPostFailMessage.make(conversationId));
+                    return res.json({});
+                } else {
+                    const randomNum = Math.floor(Math.random() * randomPosts.length);
+                    await libKakaoWork.sendMessage(
+                        randomPostMessage.make(conversationId, randomPosts[randomNum])
+                    );
+                    return res.json({});
+                }
+            } catch (e) {
+                console.log(e);
                 await libKakaoWork.sendMessage(randomPostFailMessage.make(conversationId));
                 return res.json({});
-            } else {
-                const randomNum = Math.floor(Math.random() * randomPosts.length);
-                await libKakaoWork.sendMessage(
-                    randomPostMessage.make(conversationId, randomPosts[randomNum])
-                );
-                return res.json({});
             }
+
             break;
         default:
     }
