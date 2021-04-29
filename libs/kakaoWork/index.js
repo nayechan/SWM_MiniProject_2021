@@ -25,7 +25,7 @@ exports.getUserList = async () => {
 	  Array.prototype.push.apply(users, res.data.users);
   }
 
-  console.log(users);
+  console.log('메시지 전송 유저 수: ' + users.length);
   return users;
 };
 
