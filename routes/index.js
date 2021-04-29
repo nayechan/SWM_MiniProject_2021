@@ -29,14 +29,12 @@ const { Op } = require('sequelize');
 
 router.get('/', async (req, res, next) => {
     const kakaoUsers = await libKakaoWork.getUserList();
-    // console.log(kakaoUsers);
+	console.log('총 메시지 전송 유저 수: ' + kakaoUsers.length);
 
-    // 검색된 모든 유저에게 각각 채팅방 생성 (2)
     const conversations = await Promise.all(
         kakaoUsers.map((user) => libKakaoWork.openConversations({ userId: user.id }))
     );
 
-    // 생성된 채팅방에 메세지 전송 (3)
     const messages = await Promise.all(
         conversations.map((conversation) =>
             libKakaoWork.sendMessage(inviteUserMessage.make(conversation.id))
@@ -44,9 +42,10 @@ router.get('/', async (req, res, next) => {
     );
 
     res.json({
-        kakaoUsers,
-        conversations,
-        messages,
+		result: 'success'
+        // kakaoUsers,
+        // conversations,
+        // messages,
     });
 });
 
