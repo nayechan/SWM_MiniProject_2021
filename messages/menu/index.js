@@ -13,7 +13,7 @@ module.exports = {
                     {
                         type: 'text',
                         text: '마음의 소리를 외쳐보세요📣',
-                        markdown: true,
+												markdown: false,
                     },
                     {
                         type: 'button',
@@ -28,7 +28,7 @@ module.exports = {
                     {
                         type: 'text',
                         text: '다른 사람은 어떤 소리를 외쳤을까요❔',
-                        markdown: true,
+                        markdown: false,
                     },
                     {
                         type: 'button',

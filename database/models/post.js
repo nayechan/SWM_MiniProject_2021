@@ -9,11 +9,11 @@ module.exports = function (sequlize, DataTypes) {
         allowNull: false,
       },
       title: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.STRING(128),
         allowNull: false,
       },
 	  content: {
-        type: DataTypes.STRING(1024),
+        type: DataTypes.STRING(512),
         allowNull: false,
       },
     },

@@ -8,7 +8,7 @@ module.exports = function (sequlize, DataTypes) {
         allowNull: false,
       },
       nickname: {
-        type: DataTypes.STRING(20),
+        type: DataTypes.STRING(64),
         allowNull: false,
       },
     },

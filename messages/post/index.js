@@ -11,24 +11,24 @@ module.exports = {
 						{
 							type: 'label',
 							text: '제목',
-							markdown: true,
+							markdown: false,
 						},
 						{
 							type: 'input',
 							name: 'title',
-							required: false,
-							placeholder: '제목을 입력해주세요',
+							required: true,
+							placeholder: '제목을 입력해주세요 (최대 100자)',
 						},
 						{
 							type: 'label',
 							text: '게시글 내용',
-							markdown: true,
+							markdown: false,
 						},
 						{
 							type: 'input',
 							name: 'content',
-							required: false,
-							placeholder: '게시글 내용을 입력해주세요',
+							required: true,
+							placeholder: '게시글 내용을 입력해주세요 (최대 400자)',
 						},
 					],
 				},
@@ -49,7 +49,7 @@ module.exports = {
 					{
 						type: 'text',
 						text: `${nickname} 님의 글이 성공적으로 등록되었습니다.`,
-						markdown: true,
+						markdown: false,
 					},
 					{
 						type: 'button',
@@ -105,7 +105,7 @@ module.exports = {
 					{
 						type: 'text',
 						text: `작성자 - ${post.user.nickname}`,
-						markdown: true,
+						markdown: false,
 					},
 					{
 						type: 'divider',
@@ -138,7 +138,7 @@ module.exports = {
 		make: (conversationId) => {
 			return {
 				conversationId: conversationId,
-				text: '글 등록 실패',
+				text: '글 가져오기 실패',
 				blocks: [
 					{
 						type: 'header',
@@ -148,7 +148,7 @@ module.exports = {
 					{
 						type: 'text',
 						text: '가져올 수 있는 글이 없습니다.',
-						markdown: true,
+						markdown: false,
 					},
 					{
 						type: 'button',
@@ -174,29 +174,29 @@ module.exports = {
 						{
 							type: 'label',
 							text: `${user.nickname}님의 답글`,
-							markdown: true,
+							markdown: false,
 						},
 						{
 							type: 'label',
 							text: '제목',
-							markdown: true,
+							markdown: false,
 						},
 						{
 							type: 'input',
 							name: 'title',
-							required: false,
-							placeholder: '제목을 입력해주세요',
+							required: true,
+							placeholder: '제목을 입력해주세요 (최대 100자)',
 						},
 						{
 							type: 'label',
 							text: '답글 내용',
-							markdown: true,
+							markdown: false,
 						},
 						{
 							type: 'input',
 							name: 'content',
-							required: false,
-							placeholder: '답글 내용을 입력해주세요',
+							required: true,
+							placeholder: '답글 내용을 입력해주세요 (최대 400자)',
 						},
 					],
 				},
@@ -217,7 +217,7 @@ module.exports = {
 					{
 						type: 'text',
 						text: '글이 삭제되었거나, 비정상적인 요청입니다.',
-						markdown: true,
+						markdown: false,
 					},
 					{
 						type: 'button',
@@ -245,19 +245,19 @@ module.exports = {
 					{
 						type: 'text',
 						text: `${targetPost.title}에 대한 답글입니다.`,
-						markdown: true,
+						markdown: false,
 					},
 					{
-                        type: 'divider',
-                    },
+          	type: 'divider',
+          },
 					{
 						type: 'text',
 						text: replyTitle,
-						markdown: true,
+						markdown: false,
 					},
 					{
-                        type: 'divider',
-                    },
+						type: 'divider',
+					},
 					{
 						type: 'text',
 						text: replyContent,
@@ -289,7 +289,7 @@ module.exports = {
 					{
 						type: 'text',
 						text: '답글을 성공적으로 전송했습니다.',
-						markdown: true,
+						markdown: false,
 					},
 					{
 						type: 'button',

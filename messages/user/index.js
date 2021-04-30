@@ -3,7 +3,7 @@ module.exports = {
 		make: (conversationId) => {
 			return {
 				conversationId: conversationId,
-				text: '임귀당귀 서비스 초대',
+				text: '임금님 귀는 당나귀 귀',
 				blocks: [
 					{
 						type: 'header',
@@ -21,7 +21,7 @@ module.exports = {
 						type: 'text',
 						text:
 							'어디 말할 곳은 없고, 이대로 두기에는 가슴 답답한 일이 있으신가요?',
-						markdown: true,
+						markdown: false,
 					},
 					{
 						type: 'text',
@@ -56,13 +56,13 @@ module.exports = {
 						{
 							type: 'label',
 							text: '(다른 사람에게 보여지는 닉네임입니다.)',
-							markdown: true,
+							markdown: false,
 						},
 						{
 							type: 'input',
 							name: 'nickname',
 							required: true,
-							placeholder: '닉네임',
+							placeholder: '닉네임 (공백 없이 최대 12자)',
 						},
 					],
 				},
@@ -84,7 +84,7 @@ module.exports = {
 						type: 'text',
 						text:
 							`${nickname} 님 환영합니다. 😀`,
-						markdown: true,
+						markdown: false,
 					},
 				],
 			};
