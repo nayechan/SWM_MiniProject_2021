@@ -28,24 +28,29 @@ const { user, post } = db.models;
 const { Op } = require('sequelize');
 
 router.post('/chatbot', async (req, res, next) => {
-    const kakaoUsers = await libKakaoWork.getUserList();
-    //console.log('총 메시지 전송 유저 수: ' + kakaoUsers.length);
+    try {
+        const kakaoUsers = await libKakaoWork.getUserList();
+        //console.log('총 메시지 전송 유저 수: ' + kakaoUsers.length);
 
-    const conversations = await Promise.all(
-        kakaoUsers.map((user) => libKakaoWork.openConversations({ userId: user.id }))
-    );
+        const conversations = await Promise.all(
+            kakaoUsers.map((user) => libKakaoWork.openConversations({ userId: user.id }))
+        );
 
-    const messages = await Promise.all(
-        conversations.map((conversation) =>
-            libKakaoWork.sendMessage(inviteUserMessage.make(conversation.id))
-        )
-    );
+        const messages = await Promise.all(
+            conversations.map((conversation) =>
+                libKakaoWork.sendMessage(inviteUserMessage.make(conversation.id))
+            )
+        );
+    } catch (e) {
+        console.log(e);
+        res.json({
+            result: 'fail',
+        });
+        return;
+    }
 
     res.json({
         result: 'success',
-        // kakaoUsers,
-        // conversations,
-        // messages,
     });
 });
 
@@ -102,7 +107,7 @@ router.post('/request', async (req, res, next) => {
             }
             return res.json(replyPostModal.make(userInstance, targetPost));
         } catch (e) {
-            //console.log(e);
+            console.log(e);
             return res.json(noticeModal.make('답글 모달을 얻을 수 없습니다.'));
         }
     }
@@ -136,9 +141,8 @@ router.post('/callback', async (req, res, next) => {
             if (nickname.match(/\s/g) != null) {
                 throw 'nicknameError';
             }
-					
-						if (nickname.length > 12)
-							throw 'nicknameError';
+
+            if (nickname.length > 12) throw 'nicknameError';
 
             await user.create({
                 id: kakaoUserId,
@@ -195,17 +199,16 @@ router.post('/callback', async (req, res, next) => {
             }
             const replyTitle = actions.title;
             const replyContent = actions.content;
-					
-						if(replyTitle == null || replyTitle.length > 100 || replyTitle.length == 0)
-							throw "lengthException";
-						if(replyContent == null || replyContent.length > 400 || replyContent.length == 0)
-							throw "lengthException";
+
+            if (replyTitle == null || replyTitle.length > 100 || replyTitle.length == 0)
+                throw 'lengthException';
+            if (replyContent == null || replyContent.length > 400 || replyContent.length == 0)
+                throw 'lengthException';
 
             const targetConversation = await libKakaoWork.openConversations({
                 userId: targetPost.user.id,
             });
 
-					
             await libKakaoWork.sendMessage(
                 replyMessage.make(
                     targetConversation.id,
@@ -218,7 +221,7 @@ router.post('/callback', async (req, res, next) => {
             await libKakaoWork.sendMessage(replyPostSuccessMessage.make(conversationId));
             return res.json(noticeModal.make('답글을 전송했습니다.'));
         } catch (e) {
-            //console.log(e);
+            console.log(e);
             libKakaoWork.sendMessage(
                 replyPostFailMessage.make(conversationId, '답글 전송에 실패했습니다.')
             );
@@ -232,10 +235,8 @@ router.post('/callback', async (req, res, next) => {
             const content = actions.content;
 
             try {
-								if(title.length > 100)
-									throw "lengthException";
-								if(content.length > 400)
-									throw "lengthException";
+                if (title.length > 100) throw 'lengthException';
+                if (content.length > 400) throw 'lengthException';
                 const postInstance = await post.create({
                     title: title,
                     content: content,
@@ -247,19 +248,21 @@ router.post('/callback', async (req, res, next) => {
                 return res.json(noticeModal.make('글 등록에 성공했습니다.'));
             } catch (e) {
                 //console.log('글 등록에 실패하였습니다.');
-                //console.log(e);
-								if(e.toString() == 'lengthException')
-								{
-                    await libKakaoWork.sendMessage(
-											registerPostFailMessage.make(conversationId, "글이나 제목의 길이가 너무 깁니다.")
-										);
-								}
-								else{
-									await libKakaoWork.sendMessage(
-                    registerPostFailMessage.make(conversationId, "알 수 없는 이유입니다.")
-                	);
-								}
                 
+                if (e.toString() == 'lengthException') {
+                    await libKakaoWork.sendMessage(
+                        registerPostFailMessage.make(
+                            conversationId,
+                            '글이나 제목의 길이가 너무 깁니다.'
+                        )
+                    );
+                } else {
+                    await libKakaoWork.sendMessage(
+                        registerPostFailMessage.make(conversationId, '알 수 없는 이유입니다.')
+                    );
+					console.log(e);
+                }
+
                 return res.json(noticeModal.make('글 등록에 실패했습니다.'));
             }
 
@@ -285,20 +288,20 @@ router.post('/callback', async (req, res, next) => {
                     limit: 20,
                     order: [['id', 'DESC']],
                 });
-				// console.log(randomPosts[0]);
+                // console.log(randomPosts[0]);
                 if (randomPosts == null || randomPosts.length == 0) {
                     await libKakaoWork.sendMessage(randomPostFailMessage.make(conversationId));
                     return res.json({});
                 } else {
                     const randomNum = Math.floor(Math.random() * randomPosts.length);
-										//console.log(randomPosts[randomNum]);
+                    //console.log(randomPosts[randomNum]);
                     await libKakaoWork.sendMessage(
                         randomPostMessage.make(conversationId, randomPosts[randomNum])
                     );
                     return res.json({});
                 }
             } catch (e) {
-                //console.log(e);
+                console.log(e);
                 await libKakaoWork.sendMessage(randomPostFailMessage.make(conversationId));
                 return res.json({});
             }
